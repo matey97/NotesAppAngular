@@ -1,0 +1,26 @@
+<div class="d-flex justify-content-center" style="margin: 10px;">
+  <button mat-raised-button color="primary" (click)="onCreateNoteTap()">
+    <mat-icon>add</mat-icon>
+    Nueva nota
+  </button>
+</div>
+
+<div *ngIf="(notes$ | async)?.length !== 0 ; else empty " class="d-flex flex-wrap justify-content-center notes-container">
+  <ng-template ngFor let-note [ngForOf]="notes$ | async">
+    <mat-card class="note-card align-self-center">
+      <mat-card-header>
+        <mat-card-title>{{ note.title }}</mat-card-title>
+        <mat-card-subtitle>{{ note.date | date:'HH:mm MMM d, y' }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ note.description !== '' ? note.description : '(Sin descripción)' }}</p>
+      </mat-card-content>
+    </mat-card>
+  </ng-template>
+</div>
+
+<ng-template #empty>
+  <div class="d-flex justify-content-center align-items-center" style="height: 200px">
+    <h1>¡No tienes ninguna nota!</h1>
+  </div>
+</ng-template>

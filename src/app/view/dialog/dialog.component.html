@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Añadir nota</h1>
+<div mat-dialog-content class="d-flex flex-column">
+  <mat-form-field class="input-field">
+    <mat-label>Título</mat-label>
+    <input matInput type="text" [(ngModel)]="noteTitle">
+    <button *ngIf="noteTitle" matSuffix mat-icon-button aria-label="Clear" (click)="noteTitle=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <mat-form-field class="input-field">
+    <mat-label>Descripción</mat-label>
+    <textarea matInput type="text" [(ngModel)]="noteDescription"></textarea>
+    <button *ngIf="noteDescription" matSuffix mat-icon-button aria-label="Clear" (click)="noteDescription=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="d-flex justify-content-end">
+  <button mat-raised-button color="warn" (click)="onDialogClosed()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onDialogCompleted()">Crear nota</button>
+</div>
