@@ -15,4 +15,8 @@ export class LocalRepository implements NotesRepository {
   insert(note: Note): void {
     throw new Error("Unimplemented!");
   }
+
+  clear(): void {
+    throw new Error("Unimplemented!");
+  }
 }

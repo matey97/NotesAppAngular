@@ -7,4 +7,5 @@ export const NOTES_REPOSITORY = new InjectionToken<NotesRepository>('repository'
 export interface NotesRepository {
   getNoteChanges(): Observable<Array<Note>>;
   insert(note: Note): void;
+  clear(): void;
 }
