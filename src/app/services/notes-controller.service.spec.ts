@@ -37,6 +37,7 @@ describe('NotesControllerService integration tests', () => {
     notesRepository = new LocalRepository();
     spyOn(notesRepository, "insert");
     spyOn(notesRepository, "update");
+    spyOn(notesRepository, "delete");
 
     TestBed.configureTestingModule({providers: [{provide: NOTES_REPOSITORY, useValue: notesRepository}]});
     notesControllerService = TestBed.inject(NotesControllerService);
@@ -150,6 +151,35 @@ describe('NotesControllerService integration tests', () => {
     await expectAsync(notesControllerService.updateNote("", newTitle, description2))
       .toBeRejectedWith(new NoteNotFoundError("")); // Then: se lanza la excepción NoteNotFoundError
     expect(notesRepository.update).not.toHaveBeenCalled();
+  });
+
+  it("H04_E01", async () => {
+    // Given: hay varias notas almacenadas
+    spyOn(notesRepository, "getNoteChanges").and.returnValue(
+      new Observable((subscriber) => subscriber.next([
+        note1, note2
+      ]))
+    );
+
+    // When: se intenta borrar una nota usando un id válido
+    await notesControllerService.deleteNote(id1);
+
+    // Then: se elimina la nota de la base de datos
+    expect(notesRepository.delete).toHaveBeenCalledWith(id1);
+  });
+
+  it("H04_E02", async () => {
+    // Given: hay varias notas almacenadas
+    spyOn(notesRepository, "getNoteChanges").and.returnValue(
+      new Observable((subscriber) => subscriber.next([
+        note1, note2
+      ]))
+    );
+
+    // When: se intenta borrar una nota usando un id inválido
+    await expectAsync(notesControllerService.deleteNote(""))
+      .toBeRejectedWith(new NoteNotFoundError("")); // Then: se lanza la excepción NoteNotFoundError
+    expect(notesRepository.delete).not.toHaveBeenCalled();
   });
 
   afterEach(() => {

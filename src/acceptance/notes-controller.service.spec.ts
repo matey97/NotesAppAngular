@@ -125,6 +125,38 @@ describe("NotesControllerService acceptance tests", () => {
       .toBeRejectedWith(new NoteNotFoundError("")); // Then: se lanza la excepción NoteNotFoundError
   });
 
+  it("H04_E01", async () => {
+    // Given: hay varias notas almacenadas
+    await notesControllerService.createNote(title1, description1);
+    await notesControllerService.createNote(title2, description2);
+
+    const notesObservable = notesControllerService.getNotes();
+    let notes = await firstValueFrom(notesObservable);
+    const noteId1 = notes[0].id;
+
+    // When: se intenta borrar una nota usando un id inválido
+    await notesControllerService.deleteNote(noteId1);
+
+    // Then: se elimina la nota de la base de datos
+    notes = await firstValueFrom(notesObservable);
+
+    expect(notes.length).toBe(1);
+    expect(notes[0]).toEqual(jasmine.objectContaining({
+      title: title2,
+      description: description2
+    }));
+  });
+
+  it("H04_E02", async () => {
+    // Given: hay varias notas almacenadas
+    await notesControllerService.createNote(title1, description1);
+    await notesControllerService.createNote(title2, description2);
+
+    // When: se intenta borrar una nota usando un id inválido
+    await expectAsync(notesControllerService.deleteNote(""))
+      .toBeRejectedWith(new NoteNotFoundError("")); // Then: se lanza la excepción NoteNotFoundError
+  });
+
   afterEach(() => {
     notesRepository.clear();
   });
