@@ -40,6 +40,10 @@ export class LocalRepository implements NotesRepository {
     this.subject.next(notes);
   }
 
+  update(id: string, title: string, description: string): void {
+    throw new Error("Unimplemented!");
+  }
+
   clear(): void {
     this.storage.clear();
   }
