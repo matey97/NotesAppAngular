@@ -4,6 +4,7 @@ import { TestBed } from "@angular/core/testing";
 import { LocalRepository } from "../app/data/local/repository";
 import { firstValueFrom } from "rxjs";
 import { EmptyTitleError } from "../app/errors/empty-title";
+import { NoteNotFoundError } from "../app/errors/not-found";
 
 describe("NotesControllerService acceptance tests", () => {
 
@@ -73,6 +74,55 @@ describe("NotesControllerService acceptance tests", () => {
       title: title2,
       description: description2
     }));
+  });
+
+  it("H03_E01", async () => {
+    // Given: hay varias notas almacenadas
+    await notesControllerService.createNote(title1, description1);
+    await notesControllerService.createNote(title2, description2);
+
+    const notesObservable = notesControllerService.getNotes();
+    let notes = await firstValueFrom(notesObservable);
+    const noteId2 = notes[1].id;
+
+    // When: se intenta cambiar el contenido de una nota
+    const newTitle = "New note title";
+    await notesControllerService.updateNote(noteId2, newTitle, description2);
+
+    // Then: la nota se actualiza correctamente
+    notes = await firstValueFrom(notesObservable);
+
+    expect(notes.length).toBe(2);
+    expect(notes[1]).toEqual(jasmine.objectContaining({
+      title: newTitle,
+      description: description2
+    }));
+  });
+
+  it("H03_E02", async () => {
+    // Given: hay varias notas almacenadas
+    await notesControllerService.createNote(title1, description1);
+    await notesControllerService.createNote(title2, description2);
+
+    const notes = await firstValueFrom(notesControllerService.getNotes());
+    const noteId2 = notes[1].id;
+
+    // When: se intenta cambiar el contenido de una nota con un título inválido
+    const newTitle = "";
+    await expectAsync(notesControllerService.updateNote(noteId2, newTitle, description2))
+      .toBeRejectedWith(new EmptyTitleError()); // Then: se lanza la excepción EmptyTitleError
+  });
+
+  it("H03_E03", async () => {
+    // Given: hay varias notas almacenadas
+    await notesControllerService.createNote(title1, description1);
+    await notesControllerService.createNote(title2, description2);
+
+
+    // When: se intenta cambiar el contenido de una nota con un título inválido
+    const newTitle = "Other title";
+    await expectAsync(notesControllerService.updateNote("", newTitle, description2))
+      .toBeRejectedWith(new NoteNotFoundError("")); // Then: se lanza la excepción NoteNotFoundError
   });
 
   afterEach(() => {
