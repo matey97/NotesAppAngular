@@ -1,21 +1,21 @@
-<h1 mat-dialog-title>Añadir nota</h1>
+<h1 mat-dialog-title>{{ data.dialogTitle }}</h1>
 <div mat-dialog-content class="d-flex flex-column">
   <mat-form-field class="input-field">
     <mat-label>Título</mat-label>
-    <input matInput type="text" [(ngModel)]="noteTitle">
-    <button *ngIf="noteTitle" matSuffix mat-icon-button aria-label="Clear" (click)="noteTitle=''">
+    <input matInput type="text" [(ngModel)]="data.noteTitle">
+    <button *ngIf="data.noteTitle" matSuffix mat-icon-button aria-label="Clear" (click)="data.noteTitle=''">
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
   <mat-form-field class="input-field">
     <mat-label>Descripción</mat-label>
-    <textarea matInput type="text" [(ngModel)]="noteDescription"></textarea>
-    <button *ngIf="noteDescription" matSuffix mat-icon-button aria-label="Clear" (click)="noteDescription=''">
+    <textarea matInput type="text" [(ngModel)]="data.noteDescription"></textarea>
+    <button *ngIf="data.noteDescription" matSuffix mat-icon-button aria-label="Clear" (click)="data.noteDescription=''">
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
 </div>
 <div mat-dialog-actions class="d-flex justify-content-end">
   <button mat-raised-button color="warn" (click)="onDialogClosed()">Cancelar</button>
-  <button mat-raised-button color="primary" (click)="onDialogCompleted()">Crear nota</button>
+  <button mat-raised-button color="primary" (click)="onDialogCompleted()">{{ data.dialogCompleteButton }}</button>
 </div>

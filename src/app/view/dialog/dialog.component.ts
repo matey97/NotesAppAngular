@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from "@angular/material/dialog";
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { DialogData } from "./dialog-data";
 
 @Component({
   selector: 'app-dialog',
@@ -8,11 +9,9 @@ import { MatDialogRef } from "@angular/material/dialog";
 })
 export class DialogComponent {
 
-  noteTitle: string = '';
-  noteDescription: string = '';
-
   constructor(
-    private dialogRef: MatDialogRef<DialogComponent>
+    private dialogRef: MatDialogRef<DialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 
   onDialogClosed() {
@@ -21,8 +20,8 @@ export class DialogComponent {
 
   onDialogCompleted() {
     this.dialogRef.close({
-      noteTitle: this.noteTitle,
-      noteDescription: this.noteDescription
+      noteTitle: this.data.noteTitle,
+      noteDescription: this.data.noteDescription
     });
   }
 }

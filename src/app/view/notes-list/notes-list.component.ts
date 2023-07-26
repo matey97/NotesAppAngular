@@ -5,6 +5,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { Note } from "../../data/note";
 import { NotesControllerService } from "../../services/notes-controller.service";
 import { DialogComponent } from "../dialog/dialog.component";
+import { CreateNoteDialogData } from "../dialog/dialog-data";
 
 @Component({
   selector: 'app-notes-list',
@@ -23,7 +24,9 @@ export class NotesListComponent {
   }
 
   onCreateNoteTap() {
-    const dialogRef = this.dialogService.open(DialogComponent);
+    const dialogRef = this.dialogService.open(DialogComponent, {
+      data: new CreateNoteDialogData()
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       if (!result) return;
