@@ -22,8 +22,7 @@ export class LocalRepository implements NotesRepository {
   insert(note: Note): void {
     const notes = this.listNotes();
     notes.push(note);
-    this.storage.setItem(STORAGE_KEY, JSON.stringify(notes));
-    this.subject.next(notes);
+    this.flush(notes);
   }
 
   update(id: string, title: string, description: string): void {
@@ -31,12 +30,14 @@ export class LocalRepository implements NotesRepository {
     const noteIndex = notes.findIndex((note) => note.id === id);
     notes[noteIndex] = { ...notes[noteIndex], title, description };
 
-    this.storage.setItem(STORAGE_KEY, JSON.stringify(notes));
-    this.subject.next(notes);
+    this.flush(notes);
   }
 
   delete(id: string): void {
-    throw new Error("Unimplemented!");
+    let notes = this.listNotes();
+    notes = notes.filter((note) => note.id !== id);
+
+    this.flush(notes);
   }
 
   clear(): void {
@@ -53,5 +54,10 @@ export class LocalRepository implements NotesRepository {
     }
 
     return notes;
+  }
+
+  private flush(notes: Array<Note>): void {
+    this.storage.setItem(STORAGE_KEY, JSON.stringify(notes));
+    this.subject.next(notes);
   }
 }
