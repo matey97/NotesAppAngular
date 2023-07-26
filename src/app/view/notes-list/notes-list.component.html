@@ -15,6 +15,11 @@
       <mat-card-content>
         <p>{{ note.description !== '' ? note.description : '(Sin descripción)' }}</p>
       </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-icon-button color="accent" (click)="onEditNoteTap(note)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </mat-card-actions>
     </mat-card>
   </ng-template>
 </div>

@@ -5,7 +5,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { Note } from "../../data/note";
 import { NotesControllerService } from "../../services/notes-controller.service";
 import { DialogComponent } from "../dialog/dialog.component";
-import { CreateNoteDialogData } from "../dialog/dialog-data";
+import { CreateNoteDialogData, UpdateNoteDialogData } from "../dialog/dialog-data";
 
 @Component({
   selector: 'app-notes-list',
@@ -34,6 +34,23 @@ export class NotesListComponent {
       this.notesController.createNote(result.noteTitle, result.noteDescription)
         .catch((e) => this.snackBar.open(
           `¡Nota no añadida! Causa: ${e.message}`,
+          "OK",
+          { duration: 3000 }
+        ));
+    });
+  }
+
+  onEditNoteTap(note: Note) {
+    const dialogRef = this.dialogService.open(DialogComponent, {
+      data: new UpdateNoteDialogData(note.title, note.description)
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) return;
+
+      this.notesController.updateNote(note.id, result.noteTitle, result.noteDescription)
+        .catch((e) => this.snackBar.open(
+          `¡Nota no actualizada! Causa: ${e.message}`,
           "OK",
           { duration: 3000 }
         ));
