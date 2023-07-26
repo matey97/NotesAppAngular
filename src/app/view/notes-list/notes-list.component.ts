@@ -56,4 +56,13 @@ export class NotesListComponent {
         ));
     });
   }
+
+  onDeleteNoteTap(note: Note) {
+    this.notesController.deleteNote(note.id)
+      .catch((e) => this.snackBar.open(
+        `¡Nota no eliminada! Causa: ${e.message}`,
+        "OK",
+        { duration: 3000 }
+      ));
+  }
 }
