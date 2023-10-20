@@ -1,7 +1,7 @@
 # Notes app (Angular version)
 
 Este repositorio contiene una pequeña aplicación web desarrollada usando Angular cuyo objetivo es mostrar
-implementación de historias de usuario, pruebas de aceptación y de integración.
+implementación de historias de usuario, pruebas de aceptación y de integración. 
 
 Este es un proyecto de ejemplo para las asignaturas Diseño de Software (EI1039) y Paradigmas de
 Software (EI1048) del Grado en Ingeniería Informática de la Universitat Jaume I de Castellón, España.
