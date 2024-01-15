@@ -6,7 +6,8 @@ implementación de historias de usuario, pruebas de aceptación y de integració
 Este es un proyecto de ejemplo para las asignaturas Diseño de Software (EI1039) y Paradigmas de
 Software (EI1048) del Grado en Ingeniería Informática de la Universitat Jaume I de Castellón, España.
 
-> **Note**: para obtener la especificación de las historias de usuario, así como otros proyectos de
+> [!NOTE]
+> Para obtener la especificación de las historias de usuario, así como otros proyectos de
 > ejemplo, visitar el siguiente [repositorio](https://github.com/matey97/NotesAppVersions).
 
 ## Tecnologías empleadas
@@ -26,7 +27,8 @@ La aplicación en este repositorio es una aplicación desarrollada mediante el f
 - [npm](https://www.npmjs.com) (Node Package Manager): gestor de paquetes para Node.
 - [Angular CLI](https://angular.io/cli): herramienta por linea de comandos para desarrollar proyectos Angular.
 
-> **Warning**: si surge cualquier problema, no dudéis en poneros en contacto.
+> [!TIP]
+> Si surge cualquier problema, no dudéis en poneros en contacto.
 
 ## Estructura del repositorio
 
